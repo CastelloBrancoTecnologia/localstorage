@@ -13,12 +13,11 @@ namespace LocalStorageTests
         {
             // arrange
             var key = Guid.NewGuid().ToString();
-            var salt = Guid.NewGuid().ToString();
             var original_value = "lorem ipsum dom dolor sit amet";
-            var encrypted_value = CryptographyHelpers.Encrypt(key, salt, original_value);
+            var encrypted_value = CryptographyHelpers.Encrypt(key, original_value);
 
             // act
-            var target = CryptographyHelpers.Decrypt(key, salt, encrypted_value);
+            var target = CryptographyHelpers.Decrypt(key, encrypted_value);
 
             // assert
             target.Should().NotBeNullOrEmpty();
@@ -30,12 +29,11 @@ namespace LocalStorageTests
         {
             // arrange
             var key = Guid.NewGuid().ToString("N");
-            var salt = Guid.NewGuid().ToString("N");
             var original_value = "Søm€ unicode s-tring+";
-            var encrypted_value = CryptographyHelpers.Encrypt(key, salt, original_value);
+            var encrypted_value = CryptographyHelpers.Encrypt(key, original_value);
 
             // act
-            var target = CryptographyHelpers.Decrypt(key, salt, encrypted_value);
+            var target = CryptographyHelpers.Decrypt(key, encrypted_value);
 
             // assert
             target.Should().NotBeNullOrEmpty();
@@ -47,11 +45,10 @@ namespace LocalStorageTests
         {
             // arrange
             var key = Guid.NewGuid().ToString();
-            var salt = Guid.NewGuid().ToString();
             var text = "lorem ipsum dom dolor sit amet";
 
             // act
-            var target = CryptographyHelpers.Encrypt(key, salt, text);
+            var target = CryptographyHelpers.Encrypt(key, text);
 
             // assert
             target.Should().NotBeNullOrEmpty();
@@ -76,12 +73,11 @@ namespace LocalStorageTests
             target.Should().Be(value);
         }
 
-        private LocalStorageConfiguration EncryptedConfiguration()
+        private static LocalStorageConfiguration EncryptedConfiguration()
         {
             return new LocalStorageConfiguration()
             {
                 EnableEncryption = true,
-                EncryptionSalt = "SALT-N-PEPPA"
             };
         }
     }
