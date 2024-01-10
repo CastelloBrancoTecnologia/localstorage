@@ -5,19 +5,21 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     
     <!-- NuGet Specifics -->
-    <Authors>Juliën Hanssens</Authors>
-    <Company />
-    <Description>A simple and lightweight, in-memory key/value-pair storage for persisting data in dotnet (core) apps.</Description>
-    <PackageProjectUrl>https://github.com/hanssens/localstorage-for-dotnet</PackageProjectUrl>
+    <Authors>Juliën Hanssens; Castello Branco Tecnologia</Authors>
+    <Company>Castello Branco Tecnologia</Company>
+    <Description>A simple and lightweight, in-memory key/value-pair storage for persisting data in net 8 app including net8-browser.</Description>
+    <PackageProjectUrl>https://github.com/CastelloBrancoTecnologia/localstorage</PackageProjectUrl>
     <PackageReleaseNotes>See the releases page on GitHub for release notes:
       https://github.com/hanssens/localstorage-for-dotnet/releases
     </PackageReleaseNotes>
     <PackageTags>c#, dotnet, storage, cache, nosql, keyvalue, database, lightweight</PackageTags>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/hanssens/localstorage-for-dotnet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/CastelloBrancoTecnologia/localstorage</RepositoryUrl>
     <RootNamespace>Hanssens.Net</RootNamespace>
-    <Title>LocalStorage</Title>
-    <Version>2.1.0</Version>
+    <Title>CBT.LocalStorage</Title>
+    <Version>3.0.1</Version>
+    <PackageId>CBT.$(AssemblyName)</PackageId>
+    <Product>CBT.$(AssemblyName)</Product>
   </PropertyGroup>
   
   <ItemGroup>
@@ -28,5 +30,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="DataJuggler.Cryptography" Version="8.0.1" />
   </ItemGroup>
-  
+
+	<Target Name="PushNuGetPackage" AfterTargets="GenerateNuspec">
+		<Message Text="Push NuGet Package to NuGet Feed" Importance="high"></Message>
+		<Exec Command="dotnet nuget push &quot;$(ProjectDir)bin\$(Configuration)\CBT.$(AssemblyName).$(Version).nupkg&quot; --source &quot;github&quot;"></Exec>
+	</Target>	
+	
 </Project>
